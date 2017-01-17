@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block body %}
+  <form action="" method=post>
+    <h2>Login</h2>
+    <div>
+      <input type="text" id="email" name="email" placeholder="Enter email" required>
+    </div>
+
+    <div>
+      <input type="password" id="password" name="password" placeholder="Enter Password" required>
+    </div>
+    <div>
+        <input type="checkbox" id="remember_me", name="remember_me"> Remember me
+    </div>
+    <div>
+      <button type="submit">Signin</button>
+    </div>
+  </form>
+{% endblock %}
