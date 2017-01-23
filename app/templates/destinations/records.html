@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block body %}
+<ul>
+{% for dest in dests %}
+    <li>
+        <a href="{{ url_for('destinations.show', destination_id=dest.id) }}">
+            {{ dest.city }}
+        </a>
+    </li>
+{% endfor %}
+</ul>
+
+<a href="{{ url_for('destinations.add') }}">Add one more</a>
+
+{% endblock %}

@@ -1,6 +1,6 @@
-from flask import Flask, render_template
+from flask import Flask
 from flask_bcrypt import Bcrypt
-from flask_login import LoginManager, login_required
+from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -25,8 +25,3 @@ login_manager.login_view = 'auth.login'
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-
-@app.route('/')
-@login_required
-def index():
-    return render_template("index.html")

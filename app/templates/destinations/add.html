@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block body %}
+<form action="" method=post>
+    <h2>Add destination:</h2>
+    <div>
+      <input type="text" id="city" name="city"
+        placeholder="City" value="{{ request.form.city }}"
+        required>
+    </div>
+
+    <div>
+      <input type="text" id="country" name="country"
+        placeholder="Country" value="{{ request.form.country }}"
+        required>
+    </div>
+
+    <div>
+      <input type="text" id="photo" name="photo"
+        placeholder="Photo Url" value="{{ request.form.photo }}"
+        required>
+    </div>
+
+    <div>
+      <input type="text" id="description" name="description"
+        placeholder="Description" value="{{ request.form.description }}">
+    </div>
+
+    <div>
+      <input type="text" id="traveling_with" name="traveling_with"
+        placeholder="Traveling with" value="{{ request.form.traveling_with }}">
+    </div>
+
+    <div>
+      <button type="submit">Add</button>
+    </div>
+  </form>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block body %}
+<h1>{{ dest.city }}, {{dest.country }}</h1>
+<img src="{{ dest.photo }}" />
+<p>{{ dest.description }}</p>
+
+<h2>Travelers:</h2>
+<ul>
+    {% for traveler in dest.users %}
+    <li>{{ traveler.name }}</li>
+    {% endfor %}
+</ul>
+
+<h2>Comments:</h2>
+<form action="{{ url_for('destinations.comment_add') }}" method="post">
+    <input type="hidden" id="destination_id" name="destination_id"
+    value="{{ dest.id }}">
+    <textarea id="new_comment" name="new_comment">{{ request.form.new_comment }}</textarea>
+    <button type="submit">Add comment</button>
+</form>
+{% for comment in dest.comments %}
+<div>
+    <span>{{ comment.created_by }}</span>, <span>{{ comment.created_at }}</span>
+    <p>{{ comment.text }}</p>
+</div>
+{% endfor %}
+
+{% endblock %}

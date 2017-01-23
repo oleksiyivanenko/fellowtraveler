@@ -39,7 +39,7 @@ def login():
             registered_user.password, password):
         login_user(registered_user, remember=remember_me)
         flash('Logged in successfully')
-        return redirect(request.args.get('next') or url_for('index'))
+        return redirect(request.args.get('next') or url_for('destinations.records'))
 
     flash('Email or Password is invalid', 'error')
     return redirect(url_for('auth.login'))
@@ -48,7 +48,7 @@ def login():
 @auth.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('destinations.records'))
 
 
 @auth.before_request

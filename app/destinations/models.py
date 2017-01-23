@@ -1,3 +1,5 @@
+import datetime
+
 from app import db
 
 
@@ -28,12 +30,14 @@ class Destination(db.Model):
 
     is_completed = db.Column(db.Boolean, nullable=False, default=False)
 
-    created_at = db.Column(db.DateTime)
-    updated_at = db.Column(db.DateTime)
+    created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.datetime.utcnow,
+                           onupdate=datetime.datetime.utcnow)
     created_by = db.Column(db.String)
     updated_by = db.Column(db.String)
 
-    comments = db.relationship('Comment', backref='destination')
+    comments = db.relationship('Comment', backref='destination',
+                               order_by="desc(Comment.created_at)")
     users = db.relationship('User', secondary=UsersDestinations,
                             backref=db.backref('destinations'))
 
@@ -45,7 +49,8 @@ class Comment(db.Model):
     destination_id = db.Column(db.Integer, db.ForeignKey('destinations.id'))
     text = db.Column(db.Text)
 
-    created_at = db.Column(db.DateTime)
-    updated_at = db.Column(db.DateTime)
+    created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.datetime.utcnow,
+                           onupdate=datetime.datetime.utcnow)
     created_by = db.Column(db.String)
     updated_by = db.Column(db.String)
