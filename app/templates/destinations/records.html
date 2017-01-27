@@ -6,6 +6,9 @@
         <a href="{{ url_for('destinations.show', destination_id=dest.id) }}">
             {{ dest.city }}
         </a>
+        <a href="{{ url_for('destinations.delete', destination_id=dest.id) }}">
+            Delete
+        </a>
     </li>
 {% endfor %}
 </ul>

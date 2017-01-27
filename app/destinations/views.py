@@ -10,7 +10,7 @@ destinations = Blueprint('destinations', __name__)
 @destinations.route('/')
 @login_required
 def records():
-    dests = Destination.query.all()
+    dests = current_user.destinations
     return render_template(
         'destinations/records.html',
         dests=dests,
@@ -21,8 +21,23 @@ def records():
 @destinations.route('/destinations/<int:destination_id>')
 @login_required
 def show(destination_id):
-    dest = Destination.query.filter_by(id=destination_id).first_or_404()
+    dest = Destination.query.filter_by(id=destination_id).filter(
+        Destination.users.any(id=current_user.id)
+    ).first_or_404()
     return render_template('destinations/show.html', dest=dest)
+
+
+@destinations.route('/destinations/delete/<int:destination_id>')
+@login_required
+def delete(destination_id):
+    dest = Destination.query.filter_by(id=destination_id).filter(
+        Destination.users.any(id=current_user.id)
+    ).first_or_404()
+
+    db.session.delete(dest)
+    db.session.commit()
+
+    return redirect(url_for('destinations.records'))
 
 
 @destinations.route('/add', methods=['GET', 'POST'])
@@ -54,6 +69,7 @@ def add():
 @destinations.route('/comments/add', methods=['POST'])
 @login_required
 def comment_add():
+    # TODO: Add destination ownership check
     comment = Comment(
         destination_id=int(request.form['destination_id']),
         text=request.form['new_comment'],

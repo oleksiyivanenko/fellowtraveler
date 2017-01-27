@@ -22,12 +22,6 @@ class Destination(db.Model):
 
     description = db.Column(db.Text)
 
-    # TODO:
-    # events
-    # possible transports
-    # possible hotels
-    # points of interest
-
     is_completed = db.Column(db.Boolean, nullable=False, default=False)
 
     created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
