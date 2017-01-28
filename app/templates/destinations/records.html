@@ -1,25 +1,40 @@
 {% extends "layout.html" %}
 {% block body %}
+{% if dests %}
+<h2>Your destinations:</h2>
 <ul>
 {% for dest in dests %}
     <li>
-        <a href="{{ url_for('destinations.show', destination_id=dest.id) }}">
-            {{ dest.city }}, {{ dest.country }}
-        </a>
-        <img src="{{ dest.photo }}" width="100"/>
-        <a href="{{ url_for('destinations.edit', destination_id=dest.id) }}">
-            Edit
-        </a>
-        <a href="{{ url_for('destinations.mark_completed', destination_id=dest.id) }}">
-            Mark Completed
-        </a>
-        <a href="{{ url_for('destinations.delete', destination_id=dest.id) }}">
-            Delete
-        </a>
+        <h3>
+            <a href="{{ url_for('destinations.show', destination_id=dest.id) }}">
+                {{ dest.city }}, {{ dest.country }}
+            </a>{% if dest.is_completed %} [Completed]{% endif %}
+        </h3>
+        <div>
+            {% if not dest.is_completed %}
+                <a href="{{ url_for('destinations.mark_completed', destination_id=dest.id) }}"
+                class="btn btn-success btn-xs">
+                    Mark Completed
+                </a>
+            {% endif %}
+            <a href="{{ url_for('destinations.edit', destination_id=dest.id) }}"
+            class="btn btn-default btn-xs">
+                Edit
+            </a>
+            <a href="{{ url_for('destinations.delete', destination_id=dest.id) }}"
+            class="btn btn-danger btn-xs">
+                Delete
+            </a>
+        </div>
     </li>
 {% endfor %}
 </ul>
 
-<a href="{{ url_for('destinations.add') }}">Add one more</a>
+{% else %}
+    <h1 class="text-center">You have now destinations yet! Go ahead and add one!</h1>
+{% endif %}
+<p class="text-center">
+    <a class="btn btn-lg btn-success" href="{{ url_for('destinations.add') }}" role="button">Add Destination</a>
+</p>
 
 {% endblock %}

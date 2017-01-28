@@ -1,38 +1,58 @@
 {% extends "layout.html" %}
 {% block body %}
-<h1>{{ dest.city }}, {{dest.country }}</h1>
-<img src="{{ dest.photo }}" />
-<p>{{ dest.description }}</p>
+<div class="row">
+    <div class="col-md-6">
+        <h1>{{ dest.city }}, {{dest.country }}{% if dest.is_completed %} [Completed]{% endif %}</h1>
 
-<h2>Travelers:</h2>
-<ul>
-    {% for traveler in dest.users %}
-    <li>{{ traveler.name }}</li>
-    {% endfor %}
-</ul>
 
-<a href="{{ url_for('destinations.edit', destination_id=dest.id) }}">
-    Edit
-</a>
-<a href="{{ url_for('destinations.mark_completed', destination_id=dest.id) }}">
-    Mark Completed
-</a>
-<a href="{{ url_for('destinations.delete', destination_id=dest.id) }}">
-    Delete
-</a>
+        <p>{{ dest.description }}</p>
 
-<h2>Comments:</h2>
-<form action="{{ url_for('destinations.comment_add') }}" method="post">
-    {{ form.csrf_token }}
-    {{ form.destination_id() }}
-    {{ form.text.label }} {{ form.text() }}
-    <button type="submit">Add comment</button>
-</form>
-{% for comment in dest.comments %}
-<div>
-    <span>{{ comment.created_by }}</span>, <span>{{ comment.created_at }}</span>
-    <p>{{ comment.text }}</p>
+        <h3>Travelers:</h3>
+        <ul>
+            {% for traveler in dest.users %}
+            <li>{{ traveler.name }}</li>
+            {% endfor %}
+        </ul>
+
+        {% if not dest.is_completed %}
+            <a href="{{ url_for('destinations.mark_completed', destination_id=dest.id) }}"
+            class="btn btn-success btn-xs">
+                Mark Completed
+            </a>
+        {% endif %}
+        <a href="{{ url_for('destinations.edit', destination_id=dest.id) }}"
+        class="btn btn-default btn-xs">
+            Edit
+        </a>
+        <a href="{{ url_for('destinations.delete', destination_id=dest.id) }}"
+        class="btn btn-danger btn-xs">
+            Delete
+        </a>
+    </div>
+    <img src="{{ dest.photo }}" class="col-md-6"/>
 </div>
+
+<div class="row">
+    <h2>Comments:</h2>
+    <form action="{{ url_for('destinations.comment_add') }}" method="post">
+        {{ form.csrf_token }}
+        {{ form.destination_id() }}
+        <div class="form-group">
+            {{ form.text(class_="form-control") }}
+        </div>
+        <button type="submit" class="btn btn-default">Add comment</button>
+    </form>
+</div>
+<div class="row" style="margin-top: 20px">
+{% for comment in dest.comments %}
+    <div class="col-md-12">
+    <blockquote>
+        <small><strong>{{ comment.created_by }}</strong> {{ comment.created_at.strftime('%H:%M:%S %Y-%m-%d') }}</small>
+        <p>{{ comment.text }}</p>
+    </blockquote>
+    </div>
 {% endfor %}
+</div>
+
 
 {% endblock %}
