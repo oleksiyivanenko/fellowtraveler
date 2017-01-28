@@ -10,6 +10,9 @@
         <a href="{{ url_for('destinations.edit', destination_id=dest.id) }}">
             Edit
         </a>
+        <a href="{{ url_for('destinations.mark_completed', destination_id=dest.id) }}">
+            Mark Completed
+        </a>
         <a href="{{ url_for('destinations.delete', destination_id=dest.id) }}">
             Delete
         </a>

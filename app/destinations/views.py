@@ -13,6 +13,8 @@ destinations = Blueprint('destinations', __name__)
 @login_required
 def records():
     dests = current_user.destinations
+    if request.args.get('all') is None:
+        dests = filter(lambda x: not x.is_completed, dests)
     return render_template(
         'destinations/records.html',
         dests=dests,
@@ -114,6 +116,19 @@ def edit(destination_id):
         current_user=current_user,
         form=form,
     )
+
+
+@destinations.route('/destinations/mark_completed/<int:destination_id>', methods=['GET'])
+@login_required
+def mark_completed(destination_id):
+    destination = Destination.query.filter_by(id=destination_id).filter(
+        Destination.users.any(id=current_user.id)
+    ).first_or_404()
+    destination.is_completed = True
+    db.session.add(destination)
+    db.session.commit()
+
+    return redirect(url_for('destinations.records'))
 
 
 @destinations.route('/comments/add', methods=['POST'])
