@@ -11,11 +11,18 @@
     {% endfor %}
 </ul>
 
+<a href="{{ url_for('destinations.edit', destination_id=dest.id) }}">
+    Edit
+</a>
+<a href="{{ url_for('destinations.delete', destination_id=dest.id) }}">
+    Delete
+</a>
+
 <h2>Comments:</h2>
 <form action="{{ url_for('destinations.comment_add') }}" method="post">
-    <input type="hidden" id="destination_id" name="destination_id"
-    value="{{ dest.id }}">
-    <textarea id="new_comment" name="new_comment">{{ request.form.new_comment }}</textarea>
+    {{ form.csrf_token }}
+    {{ form.destination_id() }}
+    {{ form.text.label }} {{ form.text() }}
     <button type="submit">Add comment</button>
 </form>
 {% for comment in dest.comments %}

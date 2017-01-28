@@ -4,7 +4,11 @@
 {% for dest in dests %}
     <li>
         <a href="{{ url_for('destinations.show', destination_id=dest.id) }}">
-            {{ dest.city }}
+            {{ dest.city }}, {{ dest.country }}
+        </a>
+        <img src="{{ dest.photo }}" width="100"/>
+        <a href="{{ url_for('destinations.edit', destination_id=dest.id) }}">
+            Edit
         </a>
         <a href="{{ url_for('destinations.delete', destination_id=dest.id) }}">
             Delete

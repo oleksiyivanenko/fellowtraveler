@@ -2,7 +2,9 @@ from flask import Blueprint, request, redirect, url_for, render_template
 from flask_login import login_required, current_user
 
 from app import db
+from app.auth.models import User
 from app.destinations.models import Destination, Comment
+from app.destinations.forms import CommentForm, DestinationForm
 
 destinations = Blueprint('destinations', __name__)
 
@@ -24,7 +26,8 @@ def show(destination_id):
     dest = Destination.query.filter_by(id=destination_id).filter(
         Destination.users.any(id=current_user.id)
     ).first_or_404()
-    return render_template('destinations/show.html', dest=dest)
+    form = CommentForm(destination_id=dest.id)
+    return render_template('destinations/show.html', dest=dest, form=form)
 
 
 @destinations.route('/destinations/delete/<int:destination_id>')
@@ -43,43 +46,92 @@ def delete(destination_id):
 @destinations.route('/add', methods=['GET', 'POST'])
 @login_required
 def add():
-    if request.method == 'GET':
-        return render_template(
-            'destinations/add.html',
-            current_user=current_user
-        )
+    form = DestinationForm()
+    travel_with = db.session.query(User).filter(
+        User.id != current_user.id
+    )
+    form.traveling_with.choices = [(user.id, user.name) for user in travel_with]
 
-    destination = Destination(
-        city=request.form['city'],
-        country=request.form['country'],
-        photo=request.form['photo'],
-        description=request.form['description'],
-        created_by=current_user.name,
-        updated_by=current_user.name,
+    if form.validate_on_submit():
+        destination = Destination(
+            created_by=current_user.name,
+            updated_by=current_user.name,
+        )
+        form.populate_obj(destination)
+
+        destination.users.append(current_user)
+
+        if form.traveling_with.data:
+            travelers = db.session.query(User).filter(User.id.in_(
+                form.traveling_with.data
+            ))
+            destination.users.extend(travelers)
+
+        db.session.add(destination)
+        db.session.commit()
+
+        return redirect(url_for('destinations.records'))
+
+    return render_template(
+        'destinations/add.html',
+        current_user=current_user,
+        form=form,
     )
 
-    destination.users.append(current_user)
 
-    db.session.add(destination)
-    db.session.commit()
+@destinations.route('/destinations/edit/<int:destination_id>', methods=['GET', 'POST'])
+@login_required
+def edit(destination_id):
+    destination = Destination.query.filter_by(id=destination_id).filter(
+        Destination.users.any(id=current_user.id)
+    ).first_or_404()
 
-    return redirect(url_for('destinations.records'))
+    form = DestinationForm(obj=destination)
+    travel_with = db.session.query(User).filter(
+        User.id != current_user.id
+    )
+    form.traveling_with.choices = [(user.id, user.name) for user in travel_with]
+
+    if form.validate_on_submit():
+        form.populate_obj(destination)
+        destination.updated_by = current_user.name
+
+        destination.users.append(current_user)
+
+        if form.traveling_with.data:
+            travelers = db.session.query(User).filter(User.id.in_(
+                form.traveling_with.data
+            ))
+            destination.users.extend(travelers)
+
+        db.session.add(destination)
+        db.session.commit()
+
+        return redirect(url_for('destinations.show', destination_id=destination.id))
+
+    return render_template(
+        'destinations/edit.html',
+        current_user=current_user,
+        form=form,
+    )
 
 
 @destinations.route('/comments/add', methods=['POST'])
 @login_required
 def comment_add():
-    # TODO: Add destination ownership check
-    comment = Comment(
-        destination_id=int(request.form['destination_id']),
-        text=request.form['new_comment'],
-        created_by=current_user.name,
-        updated_by=current_user.name,
-    )
-    db.session.add(comment)
-    db.session.commit()
+    form = CommentForm()
 
-    return redirect(url_for(
-        'destinations.show',
-        destination_id=request.form['destination_id']
-    ))
+    if form.validate_on_submit():
+        comment = Comment(
+            created_by=current_user.name,
+            updated_by=current_user.name,
+        )
+
+        form.populate_obj(comment)
+        db.session.add(comment)
+        db.session.commit()
+
+        return redirect(url_for(
+            'destinations.show',
+            destination_id=request.form['destination_id']
+        ))
