@@ -1,24 +1,45 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
     <link href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAK70lEQVR4Xu3aBaylVxUF4BZ3d20Dxd2dKaU4wd1aJLhDIAQZJBDcPUBxd4cCU9zdtXhw9wrre/nX5Lw7985703mvM52Zk6zcX89/tq2993lv771287H3bi7/XnsUsMcDdnMN7AmBXdwBjh/5GPnIwLFxxCjzruoBFXyZsPOMvasp4AQR8qgJ5N03eGhw8eCTwaHBh3c1DzheBILR2vvl/AHBQcHJZiz/kJw/PaCsI46rHmDd3Hy0NjmvHdw/OCA40SQ4xXje74mDLwaXna4dfVxSgLWydIWpYc+Rg1sHt5wE63UClwtcoyzvHx6cP/ivuY4LCpjn4ifJ4q8bHBxsCE45SX10fsv4s7L1+mfzzBV3dg+o0BWoVr1EDm4a3D5AcKO1GxbD5aXDWr4KeGeu3XjyjiN3Jg+o0LNxfa4slovDJQfp+lzdnLKMUaYK77qQQHxPCR42He9QErTQxvWspc+Ye1cJbhXcIDj5jLWrrF4eCx1zjcXPr3IuE5xmeviB+X3WjlLASGQWXatZmwUeGCCz/YPTD0IjrBNO56OFqziW/Xvw5wAp1tq/y/E9g0OCU0zv3zC/7zm2FFArd9GEHsc5c3KFwKIIf5YZoZ02nf07x8ivo0I6/1zwluDhQRXn/kWDCwZvC3xbSFwo+GHAi45aDw4YXXvWylxZVbYhuEaAjcdChaVHoR1/L3h3ILfjgCqxtf0jcu3lwWGB9FbFIMrXBq8P8Ifxk4BC/hNY55rVAYtytI+eObhccLOA0Kw+jqV8HNTF3ft+oGS1eJZ/ckABo9W/nPM7B18LCH+16Vleovx9WsDtvxKcd/rgh/KrWFqyvmvH1AO2RmDmvXBwpYDmLx2celqAHxZskTIWKtzyo8EHAjH6v+B6wZsCnkNRwuEfwYOCl0xzvjS/dw3+FZw0eFEg7g0V3+enb/oW9pcFKNv826SAUejZLusMmQtrswK3FtfjqJVpvq7rPhJ7YfCqgKUaAu49P7jXNInFWjRhbhP8eLruvue4tDL3jQGl+wZFU5S6v8q7ao41Rb2/ogLq2r43S2AXyTVCw3WCkbXLzrPpyjzvCj4SPDFgWfN8axKQoOZ5a3D1YeHeI4hGpuPKkzBNgR+f3nF/qdEJcIc0avw6uEDw12Ap/l1cFAKL+mkTXD+4eXD5mffrFT7eQfPfDTB0qzhp6peBtEUBdwmQmGH+9wWqvH8GCNK86gFMXsvJFmL/TNN7wudSwd+Cuvepcvyd4GzTM+/Pr5DabH3X5ylgfMBk3FnpiMCkldGFR1KavrPXT3PAReXylp3uPTPQorK4Z34TEBA5Es43uLA4r/CIjkv/YLreUBIKl5k+KPfjGd8c9wPc/0JQD3lUjp8QbI5/788qoK4hVsQa5j3f9KFFP3/MDeSFaQkpnoXFJ4I3TPN4980Bz5EGvz6da2iUur71vOkDjVdEeJOAkiml/NB5PO6atVJIBav7H5xrPKv8sSHHskXvL31uVEBTw21zXf7sGMtUi/lT8KkAw0pxLPqjgPXENnaWg18dfDoQq8YHg2sFUiLL+LYQoDQsPravj8/5o6f3COaedTw7uN907HxDQNGjVevBT831coY1C6/fBptToPmrgFrey1xK/uSGtAVe4rJSyAsCuRmbEkYGQCyqsa8Gd58gHTlvA7Mpx4iNsC8LpMbXBEiqKcyabhe8blpbSZgCNgaPCerSSmbesMylc14B355jYWV8I7jYdLyZAJ3P8wBlKaucZ3rBT2Pdx78UIBSWoBxeQAAK+EOAaO4bPCfgmsjSKCNj+AcHm4J9AmRI4ayEYD8TVKi6voKH0roOXMIbZoWvcH6lVeFmIOFbBMsI0I1FHOBBlrlDoP/uc2PXNc29ueri/hhXqXmf4LnBNwPsLA7vFBwSzKv8WIjifjEIVeGQr/BpSkVkCG0LYaZnVHi8UgbwazSFLot/N+ZlgdmHpK9HBjyjjYnCw4JavuKEcwdi+nSBtIUAdWOqQr+GFIf4SnSH55i3qeZ40azlVZPm7nhFDniDb+OAsZv0TJVizTyg+wH3yPGLg1UpwEQU03TX/L5PrklZ8jYrd7QK67nmhEW5vHHvAKkSnkDt6vADTsAfRhffRcoOwq1WHMNpGZENa+m71sntGzK86GPBqhUwzLlZEWMXds08cFCAiCzGaM9OeYiUN7AoywoBhUmVRXjZAdEqYb3LmlWCmt4zTcH4AYkJkXmu3/VWQCHyuIAHmJvBDp/WutQEdWxLM9Q6fqmJmIaJsT5FnHW6Nvbt3Z0Zt6bEMwtpakaLjOyMT1itOZzCXdvCgqMwg4BSsjUZUrQ9gHLPsrDZFgWMSqvV6xV2ZWUF203tCWb36PAActTdGbOWrHDaWFmi1WA7uJWErwKtjfeoWo0tWuBRacdEAeP7ZebyBAKUonRh3cdTKcrfentpssobXbHkd8fcf2VQL6IshLqI9GbXYk7c8e3h+wszgJe3VwFdQEmzimgb6v5jg43Tg/OsWE9QSlu4Z8yHNG8UmHMR6Y0K6Dw6U3VKCbCF1VwPWisFdCG1pL25J00X1fPvCMZ6fp7l7ACJdUMK0+AIo9UI750KyNsovKW1YkhWmkuea62AfsS2s7/RGfsHmxYsYJHrt4tcKe7nKZL1eYFhDxABCqllJXBfXC8FqPG5npjUTmt+Zi0g/UmLSNPGp1/7BJooHiTD2EvgOQ2tZSlskL5eour0p6+G0XtzrKJd6EVrrYBquRWfLKEvx8pVQL/ZLFGL1WUpwabJ7A7QIO8Wh51bK658L4nyRJlpoSetpQJGF9MG2xtU5UlHP5usMJavNjrs6ennS1jjBosaQDW5MVDacmteRVjz1BtGhar2NgQttdUo2vNjVQE+ZsODC/uzFAVIhdzQPYtrpZbDucKX+Zv+KuR+ed72l2EuSqhShYrv+ttAmzYbM3qJhdXjeniA1lYnxo1tRNowoYBmAV2f2LR4VsYFWlsuz2IHB93Hc7+1hrXaGtM4sepfJkV0Xu/4rpLbUHPYBPn9NMdc/lhLBZRobFTa5dXEjAqwKBnBrjAltS+wb9CM4RlVpa2zuwXCqKNlsXM9gW5T1WijpnPbmqv17RTZpp/L/p10PRSgErMPQBAKsCNkkTYkWgZX+G5UWA+XHrffKpSiqlvbro29hi0uRKfmQHbPGO5vzLEibHbTpLIv/a6XAhQeXNECzx6IRYUOIbv9Ne4Yj2lqtqq0TulNG65U7l95x200lpdGFT1twLr5urXucV0UYCsNGdny/nnA8lLdaQfrWPABkykWLbCKELuNX96locIVFExYodGNmoaJMFNGr1hFrqUHVBDWspFhICVhoLWtxRCg3aWx/58eX/hjbmttQXTOHCt5eYUhpLi6Z2C17fOaekAVQFi9e3O167WMjdP+3XCrrrlAFbPdp9CyM+wvRVWCZ2QaXrdiKb0eHkD74n12M4T1xKWOb6vEtJI75P64OaM2OCzohoxqECFKvVvNAL6zHgoQ24dOCvANghO4/6G5vcKP+ulc++aitCn7+JuCsWL8r5cC6gEER14Iyt8C5PZVLWoVHjA+MhtK8zZcFk65Hh5gp3fT8EX1+YGBAmU9FFBrt0coUa5Kj2upgMYbIZW1/iyFiFR5SPCYkN6qhNieh9ZSAQ2p2T9WuL5TCr/WHFBDNBeLf4K3Y9seQ63bu2vtAeNCV0xB6ybVNky8ngrYhmXsuEf3KGDH6X7n+PIeD9g57LDjVrHbe8D/Af+j1WDeQyKsAAAAAElFTkSuQmCC" rel="icon" type="image/x-icon" />
     <title>FellowTraveler -> Follow your Dreams!</title>
 </head>
 <body>
-{% block header %}
-<a href="{{url_for('destinations.records') }}">FellowTraveler</a>
-<span>Follow your Dreams!</span>
-<br />
-{% if current_user.is_authenticated %}
-<span>Hello, <b>{{ current_user.name }}</b>!</span><br />
-<a href="{{ url_for('auth.logout') }}">Logout</a>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a href="{{url_for('destinations.records') }}" class="navbar-brand">FellowTraveler</a>
+        </div>
+        <p class="navbar-text">Follow your Dreams!</p>
+        <div class="navbar-right">
+            <p class="navbar-text">
+                {% if current_user.is_authenticated %}
+                    Hello, <b>{{ current_user.name }}</b>!
+                    <a href="{{ url_for('auth.logout') }}">Logout</a>
+                {% else %}
+                    <a href="{{ url_for('auth.login') }}">Login</a> or
+                    <a href="{{ url_for('auth.register') }}">Register</a>
+                {% endif %}
+            </p>
+        </div>
+    </div>
+</nav>
 
-{% else %}
-<a href="{{ url_for('auth.login') }}">Login</a> or
-<a href="{{ url_for('auth.register') }}">Register</a>
-{% endif %}
-{% endblock %}
-
-{% block body %}
-{% endblock %}
+<div class="container">
+    {% block body %}
+    {% endblock %}
+</div>
+<footer class="footer">
+  <div class="container">
+    <hr />
+    <p class="text-muted text-right">&copy; <a href="mailto:i@oleksiyivanenko.com">Oleksiy Ivanenko</a> 2017.</p>
+  </div>
+</footer>
 </body>
 </html>
