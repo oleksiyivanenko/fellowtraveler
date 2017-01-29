@@ -10,6 +10,6 @@ SQLALCHEMY_DATABASE_URI = os.getenv(
 DATABASE_CONNECT_OPTIONS = {}
 
 CSRF_ENABLED = True
-CSRF_SESSION_KEY = os.getenv('FT_CSRF_SESSION_KEY', 'secret')
+CSRF_SESSION_KEY = os.getenv('FT_CSRF_SESSION_KEY', os.urandom(24).encode('hex'))
 
-SECRET_KEY = os.getenv('FT_SECRET_KEY', 'secret')
+SECRET_KEY = os.getenv('FT_SECRET_KEY', os.urandom(24).encode('hex'))

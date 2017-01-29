@@ -12,7 +12,7 @@ web:
 db:
   image: postgres:9.6-alpine
   volumes:
-    - /home/aksakal/pgdata:/var/lib/postgresql
+    - /home/aksakal/pgdata:/var/lib/postgresql/data
   environment:
    - POSTGRES_PASSWORD=root
    - POSTGRES_USER=root
