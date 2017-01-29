@@ -4,6 +4,9 @@ web:
   ports:
    - "80:80"
    - "443:443"
+  volumes:
+   - /etc/letsencrypt:/etc/letsencrypt
+   - /etc/ssl/certs:/dh
   environment:
    - SQLALCHEMY_DATABASE_URI=postgresql://root:root@db/fellowtraveler
   links:

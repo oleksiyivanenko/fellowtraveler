@@ -23,7 +23,7 @@ RUN pip install -r src/.meta/packages
 
 RUN rm /etc/nginx/nginx.conf
 RUN ln -s /ft/conf/nginx/nginx.conf /etc/nginx/
-RUN ln -s /ft/conf/nginx/try.conf /etc/nginx/conf.d/
+RUN ln -s /ft/conf/nginx/ft.conf /etc/nginx/conf.d/
 
 RUN rm /etc/supervisord.conf
 RUN ln -s /ft/conf/supervisord/supervisord.conf /etc/
