@@ -20,7 +20,7 @@
         <div class="navbar-right">
             <p class="navbar-text">
                 {% if current_user.is_authenticated %}
-                    Hello, <b>{{ current_user.name }}</b>!
+                    Hello, <a href="{{url_for('destinations.records') }}">{{ current_user.name }}</a>!
                     <a href="{{ url_for('auth.logout') }}">Logout</a>
                 {% else %}
                     <a href="{{ url_for('auth.login') }}">Login</a> or
@@ -38,7 +38,7 @@
 <footer class="footer">
   <div class="container">
     <hr />
-    <p class="text-muted text-right">&copy; <a href="mailto:i@oleksiyivanenko.com">Oleksiy Ivanenko</a> 2017.</p>
+    <p class="text-muted text-right">&copy; <a href="https://oleksiyivanenko.com">Oleksiy Ivanenko</a> 2017.</p>
   </div>
 </footer>
 </body>
